@@ -1,0 +1,7 @@
+h1. RStats
+
+This script was created by Daniel Laeng to demonstrate what kind of statistics we could use to measure amee's data quality.
+
+h2. Status
+
+Currently this is just an experiment, the code is horrible and untested.
