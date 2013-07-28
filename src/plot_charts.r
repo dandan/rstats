@@ -1,5 +1,3 @@
-#!/usr/bin/env Rscript
-
 
 
 # ---------------------------------------------------------------------------
@@ -7,20 +5,20 @@
 # ---------------------------------------------------------------------------
 
 # Example score histogram
-plot_example_score_histogram -< function {
-  data = floor(runif(2000000, 1, 101))
-  png("~/expected_score_histogram.png",width=1200, height=1000,units="px",bg = "white")
-  h = hist(data, breaks=c(0:100), col="red", axes=FALSE)
-  axis(1, at=seq(0, 100, 5))
-  axis(2, at=seq(0, round(max(h$counts)/10000)*10000, 20000), las=2)
-  garbage <- dev.off()
-  
-}
+#plot_example_score_histogram <- function() {
+#  data = floor(runif(2000000, 1, 101))
+#  png("~/expected_score_histogram.png",width=1200, height=1000,units="px",bg = "white")
+#  h = hist(data, breaks=c(0:100), col="red", axes=FALSE)
+#  axis(1, at=seq(0, 100, 5))
+#  axis(2, at=seq(0, round(max(h$counts)/10000)*10000, 20000), las=2)
+#  garbage <- dev.off()
+#  
+#}
 
   
   
 # Score distribution
-plot_score_histogram <- function(output_to_file=FALSE) {
+plot_score_histogram <- function(companies, output_to_file=FALSE) {
   if (output_to_file != FALSE){
     png(output_to_file,width=1200, height=1000,units="px",bg = "white")
   }
@@ -66,7 +64,7 @@ histogram_log10 <- function(raw_data, title="Histogram", xlab='Count', ylab='Amo
 
 
 # Total Emissions distribution (log10)
-plot_emissions_histogram <- function(output_to_file=FALSE) {
+plot_emissions_histogram <- function(companies, output_to_file=FALSE) {
   
   histogram_log10(companies$emissions_total, 
                   title="Histogram of companies$emissions_total", 
@@ -78,7 +76,7 @@ plot_emissions_histogram <- function(output_to_file=FALSE) {
 
 
 # Annual Sales distribution (log10)
-plot_annual_sales_histogram <- function(output_to_file=FALSE) {
+plot_annual_sales_histogram <- function(companies, output_to_file=FALSE) {
   histogram_log10(companies$annual_sales_local, 
                 title="Histogram of companies$annual_sales_local", 
                 xlab='Annual Sales Local',
@@ -88,7 +86,7 @@ plot_annual_sales_histogram <- function(output_to_file=FALSE) {
 }
 
 # Total Assets distribution (log10)
-plot_total_assets_histogram <- function(output_to_file=FALSE) {
+plot_total_assets_histogram <- function(companies, output_to_file=FALSE) {
   histogram_log10(companies$total_assets_local, 
                 title="Histogram of companies$total_assets_local", 
                 xlab='Total Assets Local',
@@ -98,7 +96,7 @@ plot_total_assets_histogram <- function(output_to_file=FALSE) {
 }
 
 # Employees Total distribution (log10)
-plot_employees_total_histogram <- function(output_to_file=FALSE) {
+plot_employees_total_histogram <- function(companies, output_to_file=FALSE) {
   histogram_log10(companies$employees_total, 
                 title="Histogram of companies$employees_total", 
                 xlab='Employees Total',
@@ -110,7 +108,7 @@ plot_employees_total_histogram <- function(output_to_file=FALSE) {
 
 
 # Annual Sales vs Emissions - Heatmap
-plot_revenue_vs_emissions_heatmap <- function(output_to_file=FALSE) {
+plot_revenue_vs_emissions_heatmap <- function(companies, output_to_file=FALSE) {
   library(MASS)
   library(hexbin)
   
@@ -146,7 +144,7 @@ plot_revenue_vs_emissions_heatmap <- function(output_to_file=FALSE) {
 }
 
 # Annual Sales vs Score - Heatmap
-plot_revenue_vs_score_heatmap <- function(output_to_file=FALSE) {
+plot_revenue_vs_score_heatmap <- function(companies, output_to_file=FALSE) {
   library(MASS)
   library(hexbin)
   
@@ -179,7 +177,7 @@ plot_revenue_vs_score_heatmap <- function(output_to_file=FALSE) {
 
 
 # Emissions vs Score - Heatmap
-plot_emissions_vs_score_heatmap <- function(output_to_file=FALSE) {
+plot_emissions_vs_score_heatmap <- function(companies, output_to_file=FALSE) {
   library(MASS)
   library(hexbin)
   
@@ -211,7 +209,7 @@ plot_emissions_vs_score_heatmap <- function(output_to_file=FALSE) {
 }
 
 # Emissions vs Score - Heatmap
-plot_financial_intensity_vs_score_heatmap <- function(output_to_file=FALSE) {
+plot_financial_intensity_vs_score_heatmap <- function(companies, output_to_file=FALSE) {
   library(MASS)
   library(hexbin)
   
@@ -257,7 +255,7 @@ plot_financial_intensity_vs_score_heatmap <- function(output_to_file=FALSE) {
 }
 
 # plot_financial_intensity_histogram()
-plot_financial_intensity_histogram <- function(output_to_file=FALSE) {
+plot_financial_intensity_histogram <- function(companies, output_to_file=FALSE) {
   library(MASS)
   library(hexbin)
   
@@ -300,90 +298,3 @@ plot_financial_intensity_histogram <- function(output_to_file=FALSE) {
   }
 }
 
-
-# ---------------------------------------------------------------------------
-# MAIN
-# ---------------------------------------------------------------------------
-
-
-args <- commandArgs(TRUE)
-
-if(FALSE) {
-  #small_companies_csv_path = '~/local/amee/data/companies-20130226.small.csv'
-  #small_companies_csv_path = '~/local/amee/data/companies-20130531.small.csv'
-  #scompanies = read.csv(small_companies_csv_path, header=TRUE)
-  #print(dim(scompanies))
-  #companies_csv_path = '~/local/amee/companies-20130226.csv'
-  #companies_csv_path = '~/local/amee/companies-20130531.csv'
-  #companies_csv_path = '~/local/amee/au_score_data-20130620.csv'
-  # companies_csv_path = args[1]
-  companies = read.csv(companies_csv_path, header=TRUE)
-  save(list = ls(all = TRUE), file = "~/local/amee/companies-20130531.RData")
-} else if(FALSE) {
-  companies_csv_path = '/home/daniel/local/amee/au_score_data_final_20130701.csv'
-  data = read.csv(companies_csv_path, header=TRUE)
-  names(data)[names(data) == 'emissions_modelled_total'] = 'emissions_total'
-  names(data)[names(data) == 'turnover_modelled'] = 'annual_sales_local'
-  names(data)[names(data) == 'industry_score'] = 'amee_industry_score'
-  names(data)[names(data) == 'amee_id'] = 'amee_company_id'
-  names(data)
-  companies = data
-} else {
-  load("~/local/amee/companies-20130531.RData")
-}
-
-print(dim(companies))
-options("scipen"=100, "digits"=4)
-
-if (TRUE) {
-  # Plot to file
-  plot_score_histogram(output_to_file="01_distribution_amee_industry_score.png")
-  plot_emissions_histogram(output_to_file="02_distribution_emissions_total.png")
-  plot_annual_sales_histogram(output_to_file="03_distribution_annual_sales_local.png")
-  plot_total_assets_histogram(output_to_file="04_distribution_total_assets_local.png")
-  plot_employees_total_histogram(output_to_file="05_distribution_employees_total.png")
-  plot_revenue_vs_emissions_heatmap(output_to_file="06_heatmap_revenue_vs_emissions.png")
-  plot_revenue_vs_score_heatmap(output_to_file="07_heatmap_revenue_vs_score.png")
-  plot_emissions_vs_score_heatmap(output_to_file="08_heatmap_emissions_vs_score.png")
-  plot_financial_intensity_vs_score_heatmap(output_to_file="09_heatmap_financial_intensity_vs_score.png")
-  plot_financial_intensity_histogram(output_to_file="10_distribution_financial_intensity.png")
-} else {
-  # Plot to screen
-  plot_score_histogram()
-  plot_emissions_histogram()
-  plot_annual_sales_histogram()
-  plot_total_assets_histogram()
-  plot_employees_total_histogram()
-  plot_revenue_vs_emissions_heatmap()
-  plot_revenue_vs_score_heatmap()
-  plot_emissions_vs_score_heatmap()
-  plot_financial_intensity_vs_score_heatmap()
-  plot_financial_intensity_histogram()  
-}
-
-
-# 
-# png('histogram_score_diff_v19_v21_raw.png', width=1200,height=1000, units="px", bg="white")
-# 
-# companies2 = data
-# merged = merge(companies, companies2, by="amee_company_id")
-# diff = merged['amee_industry_score.y'] - merged['amee_industry_score.x']
-# 
-# score_diff <- diff[!is.na(diff)]
-# 
-# h = hist(score_diff, breaks=c(-100:100), col="red", axes=FALSE)
-# axis(1, at=seq(-100, 100, 5))
-# axis(2, at=seq(0, round(max(h$counts)/10000)*10000, 20000), las=2)
-# garbage <- dev.off()
-# 
-# 
-# png('histogram_score_diff_random.png', width=1200,height=1000, units="px", bg="white")
-# random1 = sample(1:100,length(score_diff), replace=T)
-# random2 = sample(1:100,length(score_diff), replace=T)
-# rdiff = random1 - random2
-# hr = hist(rdiff, breaks=c(-100:100), col="red", axes=TRUE)
-# garbage <- dev.off()
-# 
-# diff_fixed = h$counts - hr$counts
-# 
-# bp = barplot(diff_fixed, col="blue")
