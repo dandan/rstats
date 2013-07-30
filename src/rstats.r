@@ -68,7 +68,7 @@ load_col_classes <- function(companies_csv_path, options) {
 	col_names <- colnames(read.csv(sprintf("%s", companies_csv_path), header=TRUE, nrows=1))
 	load_column_indexes = which(col_names %in% options$load_columns)
 		
-	print("Found the following columns:")
+	print(sprintf("Found the following %d columns of %d:", length(load_column_indexes), length(col_names)))
 	print(col_names[load_column_indexes])
 	print("With indexes:")
 	print(load_column_indexes)

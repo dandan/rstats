@@ -15,8 +15,15 @@ sudo ./install-dependencies.r
 
 h3. Run
 
+bc. ssh ubuntu@data-wranger.amee.com
+
 Assuming the megafile is in /mnt/data/export/megafile.csv
 
 bc. ./rstats.r --input /mnt/data/export/megafile.csv --config ../config/megafile_v1.r
 
 The resulting charts are stored as PNGs in the output/ folder, in a subfolder named after the input filename. They can be seen at http://data-wrangler.amee.com
+
+
+h3. Introduction to R
+
+Open docs/introduction.r within RStudio.
