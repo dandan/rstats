@@ -16,6 +16,7 @@ sudo ./install-dependencies.r
 h3. Run
 
 bc. ssh ubuntu@data-wranger.amee.com
+cd rstats/src
 
 Assuming the megafile is in /mnt/data/export/megafile.csv
 
@@ -26,4 +27,4 @@ The resulting charts are stored as PNGs in the output/ folder, in a subfolder na
 
 h3. Introduction to R
 
-Open docs/introduction.r within RStudio.
+Open sample R code with RStudio: [introduction.r](docs/introduction.r)
