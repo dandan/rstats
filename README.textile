@@ -27,4 +27,4 @@ The resulting charts are stored as PNGs in the output/ folder, in a subfolder na
 
 h3. Introduction to R
 
-Open sample R code with RStudio: [introduction.r](docs/introduction.r)
+Open sample R code with RStudio: [introduction.r](rstats/docs/introduction.r)
