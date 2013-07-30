@@ -81,18 +81,23 @@ load_col_classes <- function(companies_csv_path, options) {
 
 run <- function() {
 	options = get_options()
-	companies = load_companies_csv(options$input, options)
+  filepath = options$input
+	companies = load_companies_csv(filepath, options)
+
+  output_dir = sprintf("../output/%s", basename(sub('\\..*', '\\1', filepath)))
+  dir.create(output_dir)
+  print(sprintf("Generating charts in %s", output_dir))
 	
-	plot_score_histogram(companies, output_to_file="../output/01_distribution_amee_industry_score.png")
-	plot_emissions_histogram(companies, output_to_file="../output/02_distribution_emissions_total.png")
-	plot_annual_sales_histogram(companies, output_to_file="../output/03_distribution_annual_sales_local.png")
+	plot_score_histogram(companies, output_to_file=paste(output_dir, "01_distribution_amee_industry_score.png", sep='/'))
+	plot_emissions_histogram(companies, output_to_file=paste(output_dir, "02_distribution_emissions_total.png", sep='/'))
+	plot_annual_sales_histogram(companies, output_to_file=paste(output_dir, "03_distribution_annual_sales_local.png", sep='/'))
 	#plot_total_assets_histogram(companies, output_to_file="../output/04_distribution_total_assets_local.png")
 	#plot_employees_total_histogram(companies, output_to_file="../output/05_distribution_employees_total.png")
-	plot_revenue_vs_emissions_heatmap(companies, output_to_file="../output/06_heatmap_revenue_vs_emissions.png")
-	plot_revenue_vs_score_heatmap(companies, output_to_file="../output/07_heatmap_revenue_vs_score.png")
-	plot_emissions_vs_score_heatmap(companies, output_to_file="../output/08_heatmap_emissions_vs_score.png")
-	plot_financial_intensity_vs_score_heatmap(companies, output_to_file="../output/09_heatmap_financial_intensity_vs_score.png")
-	plot_financial_intensity_histogram(companies, output_to_file="../output/10_distribution_financial_intensity.png")	
+	plot_revenue_vs_emissions_heatmap(companies, output_to_file=paste(output_dir, "06_heatmap_revenue_vs_emissions.png", sep='/'))
+	plot_revenue_vs_score_heatmap(companies, output_to_file=paste(output_dir, "07_heatmap_revenue_vs_score.png", sep='/'))
+	plot_emissions_vs_score_heatmap(companies, output_to_file=paste(output_dir, "08_heatmap_emissions_vs_score.png", sep='/'))
+	plot_financial_intensity_vs_score_heatmap(companies, output_to_file=paste(output_dir, "09_heatmap_financial_intensity_vs_score.png", sep='/'))
+	plot_financial_intensity_histogram(companies, output_to_file=paste(output_dir, "10_distribution_financial_intensity.png", sep='/'))
 }
 
 run()
