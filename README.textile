@@ -5,3 +5,18 @@ This script was created by Daniel Laeng to demonstrate what kind of statistics w
 h2. Status
 
 Currently this is just an experiment, the code is horrible and untested.
+
+h3. Setup
+
+bc. sudo apt-get install r-base
+git clone git@github.com:dandan/rstats.git
+cd rstats/src
+sudo ./install-dependencies.r
+
+h3. Run
+
+Assuming the megafile is in /mnt/data/export/megafile.csv
+
+bc. ./rstats.r --input /mnt/data/export/megafile.csv --config ../config/megafile_v1.r
+
+The resulting charts are stored as PNGs in the output/ folder, in a subfolder named after the input filename. They can be seen at http://data-wrangler.amee.com
